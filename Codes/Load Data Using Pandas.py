@@ -7,4 +7,4 @@ print df  # view the whole data
 print df.head(5)  # view first 5 records
 print df.tail(5)  # view last 5 records
 
-print df.describe  # view statistics about the data frame(min, max, standard
+print df.describe  # view statistics about the data frame(min, max, standard deviation,...)
