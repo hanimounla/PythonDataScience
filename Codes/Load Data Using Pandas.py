@@ -9,4 +9,4 @@ print df.head(5)  # view first 5 records
 print df.tail(5)  # view last 5 records
 
 print df.describe  # view statistics about the data frame(min, max, standard deviation,...)
-df.hist()
+df.hist() # creates multiple plots correspnds with the number of featues in the dataframe (df)
