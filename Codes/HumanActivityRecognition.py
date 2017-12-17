@@ -161,3 +161,7 @@ plot_confusion_matrix(cnf_matrix, classes=class_names, normalize=True,
 
 plt.show()
 ################################################
+'''
+    Part 3 :
+'''
+# Multiclass Logistic Regression with Elastic Net
