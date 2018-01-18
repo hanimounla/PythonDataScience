@@ -1,3 +1,3 @@
 # PythonDataScience
-Python is now the leading programming language in data science...this reposetry help beginners to get into data science
-We're going to get to know about pyhon great packages and how to implement their methods 
+Python is now the leading programming language in data science...this reposetry help beginners and who is into Python to get into data science and implement ready code to help in real life data problems.
+
