@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 
 
 # Figures inline and set visualization style
-#matplotlib inline
+%matplotlib inline
 sns.set()
 
 # Import data
@@ -29,6 +29,47 @@ data.info()
 data.name.tail()
 
 # Extract Title from Name, store in column and plot barplot
-data['Title'] = data.name.apply(lambda x: re.search(' ([A-Z][a-z]+)\.', x).group(1))
-sns.countplot(x='Title', data=data);
+titles_list = []
+for full_name in data.name:
+    name = str(full_name)
+    titles_list.append(have_title(name))
+
+
+def have_title(name):
+    if re.search(' ([A-Z][a-z]+)\.',name):
+        return re.findall(' ([A-Z][a-z]+)\.',name)
+    else:
+        return ['No_title']
+    
+    
+titles = []
+for title in titles_list:
+    print title
+    titles.append(title[0])
+
+data['title'] = titles
+#data['Title'] = data.name.apply(lambda x: re.search(' ([A-Z][a-z]+)\.',x).group(1)) #not working !
+sns.countplot(x='title', data=data);
 plt.xticks(rotation=45);
+
+#Regulize titles
+data['title'] = data['title'].replace({'Mlle':'Miss', 'Mme':'Mrs', 'Ms':'Miss'})
+data['title'] = data['title'].replace(['Don', 'Dona', 'Rev', 'Dr',
+                                            'Major', 'Lady', 'Sir', 'Col', 'Capt', 'Countess', 'Jonkheer', 'No_title'],'Special')
+sns.countplot(x='title', data=data);
+plt.xticks(rotation=45);
+
+# Did they have a Cabin?
+data['Has_Cabin'] = ~data.cabin.isnull()
+
+# View head of data
+data.head()
+
+len(data)-len(data.loc[(data['Has_Cabin'] == True)])
+
+
+
+
+
+
+
