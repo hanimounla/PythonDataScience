@@ -67,6 +67,18 @@ data.head()
 
 len(data)-len(data.loc[(data['Has_Cabin'] == True)])
 
+# Drop columns and view head
+data.drop(['cabin', 'name', 'ticket'], axis=1, inplace=True)
+data.head()
+
+data.info()
+
+data['age'] = data.age.fillna(data.age.median())
+data['fare'] = data.fare.fillna(data.fare.median())
+data['embarked'] = data['embarked'].fillna('S')
+
+data.info()
+
 
 
 
