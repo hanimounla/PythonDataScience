@@ -15,7 +15,7 @@ sns.set()
 # Import data
 df = pd.read_csv('DataSets\\titanicData.csv')
 
-df_train, df_test = train_test_split(df, train_size = 0.7, random_state = 2)
+df_train, df_test = train_test_split(df, train_size = 0.70, random_state = 2)
 
 
 # Store target variable of training data in a safe place
@@ -105,7 +105,37 @@ data.head()
 data_dum = pd.get_dummies(data, drop_first=True)
 data_dum.head()
 
+##Creating Mchine Learning Module for dataset
+# Split into test.train
+data_train = data_dum.iloc[:891]
+data_test = data_dum.iloc[891:]
 
+# Transform into arrays for scikit-learn
+X = data_train.values
+test = data_test.values
+y = survived_train.values
+
+# Setup the hyperparameter grid
+dep = np.arange(1,9)
+param_grid = {'max_depth' : dep}
+
+# Instantiate a decision tree classifier: clf
+clf = tree.DecisionTreeClassifier()
+
+# Instantiate the GridSearchCV object: clf_cv
+clf_cv = GridSearchCV(clf, param_grid=param_grid, cv=5)
+
+# Fit it to the data
+clf_cv.fit(X, y)
+
+# Print the tuned parameter and score
+print("Tuned Decision Tree Parameters: {}".format(clf_cv.best_params_))
+print("Best score is {}".format(clf_cv.best_score_))
+
+
+Y_pred = clf_cv.predict(test)
+df_test['Survived'] = Y_pred
+df_test[['PassengerId', 'Survived']].to_csv('data/predictions/dec_tree_feat_eng.csv', index=False)
 
 
 
