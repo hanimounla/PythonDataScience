@@ -13,7 +13,7 @@ from sklearn.model_selection import train_test_split
 sns.set()
 
 # Import data
-df = pd.read_csv('C:\Users\hani-_000\Documents\RStudio\\repos\Cleaning-Titanic-Data\\titanic_original.csv')
+df = pd.read_csv('DataSets\\titanicData.csv')
 
 df_train, df_test = train_test_split(df, train_size = 0.7, random_state = 2)
 
