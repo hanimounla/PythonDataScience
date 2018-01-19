@@ -29,11 +29,6 @@ data.info()
 data.name.tail()
 
 # Extract Title from Name, store in column and plot barplot
-titles_list = []
-for full_name in data.name:
-    name = str(full_name)
-    titles_list.append(have_title(name))
-
 
 def have_title(name):
     if re.search(' ([A-Z][a-z]+)\.',name):
@@ -41,10 +36,16 @@ def have_title(name):
     else:
         return ['No_title']
     
+titles_list = []
+for full_name in data.name:
+    name = str(full_name)
+    titles_list.append(have_title(name))
+
+
+    
     
 titles = []
 for title in titles_list:
-    print title
     titles.append(title[0])
 
 data['title'] = titles
@@ -60,15 +61,16 @@ sns.countplot(x='title', data=data);
 plt.xticks(rotation=45);
 
 # Did they have a Cabin?
-data['Has_Cabin'] = ~data.cabin.isnull()
+data['has_cabin'] = ~data.cabin.isnull()
 
 # View head of data
 data.head()
+data.info()
 
-len(data)-len(data.loc[(data['Has_Cabin'] == True)])
+#len(data)-len(data.loc[(data['has_cabin'] == True)]) # passengers whom dont have cabine
 
 # Drop columns and view head
-data.drop(['cabin', 'name', 'ticket'], axis=1, inplace=True)
+data.drop(['cabin', 'name', 'ticket','home.dest','survived','boat','body'], axis=1, inplace=True)
 data.head()
 
 data.info()
@@ -79,6 +81,29 @@ data['embarked'] = data['embarked'].fillna('S')
 
 data.info()
 
+# Binning numerical columns
+data['catAge'] = pd.qcut(data.age, q=4, labels=False )
+data['catFare']= pd.qcut(data.fare, q=4, labels=False)
+data.head()
+
+# Transform into binary variables
+data_dum = pd.get_dummies(data, drop_first=True)
+data_dum.head()
+
+data = data.drop(['age', 'fare'], axis=1)
+data.head()
+data.reset_index()
+
+# Create column of number of Family members onboard
+data['fam_size'] = data.parch + data.sibsp
+
+# Drop columns
+data = data.drop(['sibsp','parch'], axis=1)
+data.head()
+
+# Transform into binary variables
+data_dum = pd.get_dummies(data, drop_first=True)
+data_dum.head()
 
 
 
